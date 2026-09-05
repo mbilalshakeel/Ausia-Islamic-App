@@ -16,6 +16,14 @@
   --pad-sm:clamp(13px,3.4vw,18px);
   --pad-md:clamp(15px,3.8vw,22px);
   --gap:clamp(10px,2.6vw,16px);
+
+  /* ===== Section Dimension Controls =====
+     w = width (%), minh/maxh = min/max height (px, 0 = unset/auto) */
+  --header-w:100%;   --header-minh:0px;   --header-maxh:0px;
+  --reading-w:100%;  --reading-minh:0px;  --reading-maxh:0px;
+  --event-w:100%;    --event-minh:0px;    --event-maxh:0px;
+  --tools-w:100%;    --tools-minh:0px;    --tools-maxh:0px;
+  --books-w:100%;    --books-minh:0px;    --books-maxh:0px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -140,6 +148,69 @@ body{
   .head-right{inline-size:100%;flex-direction:row;flex-wrap:wrap;
     align-items:center;justify-content:space-between;gap:10px}
   .info-pills{flex:1 1 100%;justify-content:flex-start}
+}
+
+/* ---------- Section dimension application ---------- */
+/* Applied only >=768px so phones always keep the fluid auto layout */
+@media(min-width:768px){
+  .header{inline-size:var(--header-w);min-block-size:var(--header-minh);
+    max-block-size:var(--header-maxh,none)}
+  .reading{inline-size:var(--reading-w);min-block-size:var(--reading-minh);
+    max-block-size:var(--reading-maxh,none)}
+  .poster{inline-size:var(--event-w);min-block-size:max(var(--event-minh),clamp(170px,26vw,270px));
+    max-block-size:var(--event-maxh,none)}
+  .grid3{inline-size:var(--tools-w);min-block-size:var(--tools-minh);
+    max-block-size:var(--tools-maxh,none)}
+  .slider{inline-size:var(--books-w);min-block-size:var(--books-minh);
+    max-block-size:var(--books-maxh,none)}
+  /* when a max-height is set, keep content scrollable instead of clipped */
+  .sec-scroll{overflow-y:auto;scrollbar-width:thin}
+}
+.header,.reading,.poster,.grid3,.slider{
+  transition:inline-size .28s ease, min-block-size .28s ease, max-block-size .28s ease}
+@media(prefers-reduced-motion:reduce){
+  .header,.reading,.poster,.grid3,.slider{transition:none}
+}
+
+/* ---------- Dimension Control Panel ---------- */
+.dim-fab{position:fixed;right:16px;bottom:88px;z-index:60;inline-size:52px;block-size:52px;
+  border:0;border-radius:50%;cursor:pointer;font-size:22px;color:#fff;
+  background:linear-gradient(140deg,#5275D9,#8F82D9);
+  box-shadow:0 12px 28px rgba(82,117,217,.45);transition:.25s}
+.dim-fab:hover{transform:translateY(-3px) rotate(20deg)}
+.dim-panel{position:fixed;inset-block:0;right:0;z-index:61;inline-size:min(340px,92vw);
+  transform:translateX(105%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  background:rgba(255,255,255,.82);backdrop-filter:blur(22px) saturate(170%);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  border-left:1px solid rgba(255,255,255,.9);
+  box-shadow:-16px 0 44px rgba(40,55,120,.22);
+  display:flex;flex-direction:column}
+.dim-panel.open{transform:translateX(0)}
+.dp-head{padding:18px 18px 12px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid rgba(120,130,190,.16)}
+.dp-head h3{font-size:15px;font-weight:800}
+.dp-head p{font-size:10.5px;color:var(--muted);margin-top:2px}
+.dp-close{border:0;background:rgba(120,130,190,.12);inline-size:30px;block-size:30px;
+  border-radius:10px;cursor:pointer;font-size:15px;color:var(--ink)}
+.dp-body{flex:1;overflow-y:auto;padding:14px 18px 18px;display:flex;flex-direction:column;gap:14px}
+.dp-group{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+  border-radius:16px;padding:13px;box-shadow:0 4px 14px rgba(82,117,217,.1)}
+.dp-group > b{font-size:12.5px;font-weight:800;display:block;margin-bottom:9px}
+.dp-ctrl{margin-bottom:9px}
+.dp-ctrl:last-child{margin-bottom:0}
+.dp-ctrl label{display:flex;justify-content:space-between;font-size:10.5px;
+  font-weight:700;color:var(--muted);margin-bottom:4px}
+.dp-ctrl label span{color:var(--blue);font-weight:800}
+.dp-ctrl input[type=range]{inline-size:100%;accent-color:var(--blue);cursor:pointer}
+.dp-foot{padding:12px 18px 18px;border-top:1px solid rgba(120,130,190,.16);display:flex;gap:8px}
+.dp-foot button{flex:1;border:0;cursor:pointer;border-radius:12px;padding:11px;
+  font-size:11.5px;font-weight:800;transition:.2s}
+.dp-reset{background:rgba(120,130,190,.14);color:var(--ink)}
+.dp-save{background:linear-gradient(135deg,#5275D9,#8F82D9);color:#fff}
+.dp-foot button:hover{transform:translateY(-2px)}
+.dp-note{font-size:10px;color:var(--muted);text-align:center;padding:0 18px 12px;line-height:1.5}
+@media(max-width:767px){
+  .dim-fab{bottom:96px;right:12px;inline-size:46px;block-size:46px;font-size:19px}
 }
 
 /* ---------- Section heads ---------- */
@@ -580,5 +651,109 @@ function fmt(d){return d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-di
 initLocation();
 setInterval(initLocation,900000); /* refresh every 15 min */
 </script>
+
+<!-- ===== Section Dimension Control Panel ===== -->
+<button class="dim-fab" id="dimFab" aria-label="Section size settings" title="Section size settings">📐</button>
+
+<aside class="dim-panel" id="dimPanel" aria-hidden="true">
+  <div class="dp-head">
+    <div>
+      <h3>Section Dimensions</h3>
+      <p>Adjust width &amp; height per section</p>
+    </div>
+    <button class="dp-close" id="dpClose" aria-label="Close">✕</button>
+  </div>
+  <div class="dp-body" id="dpBody"><!-- generated --></div>
+  <div class="dp-foot">
+    <button class="dp-reset" id="dpReset">Reset all</button>
+    <button class="dp-save" id="dpSave">Save</button>
+  </div>
+  <p class="dp-note">Sizes apply on tablet &amp; desktop. Mobile stays fully fluid.</p>
+</aside>
+
+<script>
+/* ---------- Section Dimension Controls ---------- */
+const DIM_SECTIONS=[
+  {key:'header', label:'Top Header Card'},
+  {key:'reading',label:'Reading Section'},
+  {key:'event',  label:'Upcoming Event'},
+  {key:'tools',  label:'Tools Row'},
+  {key:'books',  label:'Islamic Books'}
+];
+const DIM_DEFAULTS={w:100,minh:0,maxh:0};
+const dimRoot=document.documentElement;
+let dimState={};
+
+function dimLoad(){
+  try{ dimState=JSON.parse(localStorage.getItem('ausiaDims')||'{}'); }catch(e){ dimState={}; }
+  DIM_SECTIONS.forEach(s=>{ dimState[s.key]={...DIM_DEFAULTS, ...(dimState[s.key]||{})}; });
+}
+function dimApply(){
+  DIM_SECTIONS.forEach(s=>{
+    const v=dimState[s.key];
+    dimRoot.style.setProperty(`--${s.key}-w`, v.w+'%');
+    dimRoot.style.setProperty(`--${s.key}-minh`, v.minh+'px');
+    dimRoot.style.setProperty(`--${s.key}-maxh`, v.maxh? v.maxh+'px' : 'none');
+    const el=dimTarget(s.key);
+    if(el) el.classList.toggle('sec-scroll', v.maxh>0);
+  });
+}
+function dimTarget(k){
+  return {header:'.header',reading:'.reading',event:'.poster',tools:'.grid3',books:'.slider'}[k]
+    ? document.querySelector({header:'.header',reading:'.reading',event:'.poster',tools:'.grid3',books:'.slider'}[k])
+    : null;
+}
+function dimBuild(){
+  const body=document.getElementById('dpBody');
+  body.innerHTML=DIM_SECTIONS.map(s=>{
+    const v=dimState[s.key];
+    return `<div class="dp-group">
+      <b>${s.label}</b>
+      ${ctrl(s.key,'w','Width',v.w,40,100,1,'%')}
+      ${ctrl(s.key,'minh','Min height',v.minh,0,800,10,'px')}
+      ${ctrl(s.key,'maxh','Max height',v.maxh,0,1200,10,'px')}
+    </div>`;
+  }).join('');
+  body.querySelectorAll('input[type=range]').forEach(inp=>{
+    inp.addEventListener('input',e=>{
+      const {sec,prop,unit}=e.target.dataset;
+      const val=+e.target.value;
+      dimState[sec][prop]=val;
+      e.target.closest('.dp-ctrl').querySelector('label span').textContent=
+        (prop!=='w' && val===0) ? 'auto' : val+unit;
+      dimApply();
+    });
+  });
+}
+function ctrl(sec,prop,label,val,min,max,step,unit){
+  const shown=(prop!=='w' && val===0)?'auto':val+unit;
+  return `<div class="dp-ctrl">
+    <label>${label}<span>${shown}</span></label>
+    <input type="range" min="${min}" max="${max}" step="${step}" value="${val}"
+      data-sec="${sec}" data-prop="${prop}" data-unit="${unit}">
+  </div>`;
+}
+
+const dimPanel=document.getElementById('dimPanel');
+function dimToggle(open){
+  dimPanel.classList.toggle('open',open);
+  dimPanel.setAttribute('aria-hidden', open?'false':'true');
+}
+document.getElementById('dimFab').onclick=()=>dimToggle(!dimPanel.classList.contains('open'));
+document.getElementById('dpClose').onclick=()=>dimToggle(false);
+document.getElementById('dpSave').onclick=()=>{
+  localStorage.setItem('ausiaDims',JSON.stringify(dimState));
+  const b=document.getElementById('dpSave'); const t=b.textContent;
+  b.textContent='Saved ✓'; setTimeout(()=>b.textContent=t,1400);
+};
+document.getElementById('dpReset').onclick=()=>{
+  DIM_SECTIONS.forEach(s=>dimState[s.key]={...DIM_DEFAULTS});
+  localStorage.removeItem('ausiaDims'); dimApply(); dimBuild();
+};
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') dimToggle(false); });
+
+dimLoad(); dimApply(); dimBuild();
+</script>
+
 </body>
 </html>
