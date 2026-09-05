@@ -147,23 +147,34 @@ body{
 .shead h2{font-size:15px;font-weight:800}
 .shead a{font-size:11px;font-weight:700;color:var(--blue);text-decoration:none}
 
-/* ---------- Prayer ---------- */
-.pray-wrap{padding:var(--pad-sm)}
+/* ---------- Prayer strip (inside header) ---------- */
+.head-prayers{position:relative;margin-top:clamp(16px,3.2vw,24px);
+  padding-top:clamp(14px,2.8vw,20px);border-top:1px solid rgba(255,255,255,.28)}
+.hp-title{display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-bottom:clamp(10px,2.2vw,14px)}
+.hp-title span{font-size:clamp(12px,2.5vw,15px);font-weight:800;color:#fff;
+  letter-spacing:.2px}
+.hp-title a{font-size:clamp(10.5px,2.1vw,12.5px);font-weight:700;
+  color:rgba(255,255,255,.9);text-decoration:none;white-space:nowrap}
+.hp-title a:hover{color:#fff;text-decoration:underline}
 .pray-row{display:flex;gap:var(--gap);overflow-x:auto;padding:2px 2px 6px;
   scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
 .pray-row::-webkit-scrollbar{height:0}
-.pray{flex:1 1 clamp(64px,17vw,110px);border-radius:16px;padding:clamp(10px,2.4vw,15px) 6px;text-align:center;
-  min-inline-size:0;
-  background:rgba(255,255,255,.72);border:1px solid var(--stroke);
-  transition:.25s;cursor:pointer}
+.pray{flex:1 1 clamp(58px,15vw,120px);border-radius:16px;
+  padding:clamp(10px,2.2vw,15px) clamp(4px,1.4vw,10px);text-align:center;
+  min-inline-size:0;scroll-snap-align:start;
+  background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.34);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#fff;transition:.25s;cursor:pointer}
 .pray em{display:block;font-size:clamp(16px,3.6vw,22px);font-style:normal;margin-bottom:4px}
-.pray b{display:block;font-size:clamp(11px,2.4vw,14px)}
-.pray small{font-size:clamp(10px,2.2vw,12.5px);color:var(--muted);white-space:nowrap}
-.pray:hover{transform:translateY(-3px)}
-.pray.active{color:#fff;border-color:transparent;
-  background:linear-gradient(145deg,#5275D9,#8F82D9);
-  box-shadow:0 10px 22px rgba(82,117,217,.42)}
-.pray.active small{color:rgba(255,255,255,.85)}
+.pray b{display:block;font-size:clamp(10.5px,2.2vw,14px);color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pray small{font-size:clamp(9.5px,2vw,12px);color:rgba(255,255,255,.85);white-space:nowrap}
+.pray:hover{transform:translateY(-3px);background:rgba(255,255,255,.26)}
+.pray.active{background:#fff;border-color:#fff;color:var(--blue);
+  box-shadow:0 12px 26px rgba(0,0,0,.22)}
+.pray.active b{color:var(--blue)}
+.pray.active small{color:var(--purple);font-weight:700}
 
 /* ---------- Reading tiles ---------- */
 .reading{padding:var(--pad-md)}
@@ -276,7 +287,6 @@ body{
   .app{max-width:760px;display:grid;grid-template-columns:repeat(6,1fr);gap:18px;align-items:start}
   .header{grid-column:span 6}
   .brand h1{font-size:20px}
-  .pray-wrap{grid-column:span 6}
   .reading{grid-column:span 6}
   .grid4{grid-template-columns:repeat(auto-fit,minmax(min(112px,100%),1fr))}
   .right{grid-column:span 3;display:flex;flex-direction:column;gap:var(--gap)}
@@ -298,7 +308,6 @@ body{
     gap:20px;align-items:start}
   .header{grid-column:span 12}
   .brand h1{font-size:22px}
-  .pray-wrap{grid-column:span 12}
   .reading{grid-column:span 8}
   .grid4{grid-template-columns:repeat(auto-fit,minmax(min(128px,100%),1fr))}
   .right{grid-column:span 4;display:flex;flex-direction:column;gap:var(--gap)}
@@ -367,18 +376,22 @@ body{
         <button class="contact-btn">Contact</button>
       </div>
     </div>
-  </header>
 
-  <section class="glass pray-wrap">
-    <div class="shead"><h2>Daily Prayer Schedule</h2><a href="#">Full month →</a></div>
-    <div class="pray-row">
-      <div class="pray"><em>🌄</em><b>Fajr</b><small>04:12 AM</small></div>
-      <div class="pray active"><em>☀️</em><b>Dhuhr</b><small>11:48 AM</small></div>
-      <div class="pray"><em>🌤</em><b>Asr</b><small>03:15 PM</small></div>
-      <div class="pray"><em>🌇</em><b>Maghrib</b><small>06:02 PM</small></div>
-      <div class="pray"><em>🌙</em><b>Isha</b><small>07:32 PM</small></div>
+    <!-- Daily Prayer Schedule (integrated into header) -->
+    <div class="head-prayers">
+      <div class="hp-title">
+        <span>Daily Prayer Schedule</span>
+        <a href="#">Full month →</a>
+      </div>
+      <div class="pray-row">
+        <div class="pray"><em>🌄</em><b>Fajr</b><small>04:12 AM</small></div>
+        <div class="pray active"><em>☀️</em><b>Dhuhr</b><small>11:48 AM</small></div>
+        <div class="pray"><em>🌤</em><b>Asr</b><small>03:15 PM</small></div>
+        <div class="pray"><em>🌇</em><b>Maghrib</b><small>06:02 PM</small></div>
+        <div class="pray"><em>🌙</em><b>Isha</b><small>07:32 PM</small></div>
+      </div>
     </div>
-  </section>
+  </header>
 
   <section class="glass reading">
     <div class="shead"><h2>Reading Section</h2><a href="#">See all →</a></div>
