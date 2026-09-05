@@ -63,18 +63,18 @@ body{
   position:relative;overflow:hidden;
   padding:clamp(18px,4vw,30px);
   border-radius:clamp(22px,4.2vw,32px);
-  background:
-    radial-gradient(520px 300px at 88% -20%, rgba(255,255,255,.55), transparent 62%),
-    linear-gradient(140deg,#EDE7FC 0%, #DFD8F8 38%, #CFDCFB 100%);
-  border:1px solid rgba(255,255,255,.85);
+  color:#fff;
+  background:linear-gradient(140deg,#5275D9 0%, #8F82D9 60%, #AFA7E8 100%);
+  border:1px solid rgba(255,255,255,.28);
   box-shadow:
-    0 22px 48px rgba(122,105,205,.26),
-    0 6px 16px rgba(82,117,217,.14),
-    inset 0 1px 0 rgba(255,255,255,.95);
+    0 20px 44px rgba(82,117,217,.38),
+    0 6px 16px rgba(122,105,205,.22),
+    inset 0 1px 0 rgba(255,255,255,.32);
 }
-.header::after{content:"";position:absolute;inline-size:230px;block-size:230px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.55),transparent 68%);
-  right:-80px;bottom:-110px;pointer-events:none}
+.header::before{content:"";position:absolute;inline-size:170px;block-size:170px;border-radius:50%;
+  background:rgba(255,255,255,.12);left:-60px;top:-70px;pointer-events:none}
+.header::after{content:"";position:absolute;inline-size:240px;block-size:240px;border-radius:50%;
+  background:rgba(255,255,255,.15);right:-80px;top:-90px;pointer-events:none}
 
 .head-main{position:relative;display:flex;justify-content:space-between;
   align-items:flex-start;gap:clamp(14px,3vw,26px);flex-wrap:wrap}
@@ -85,59 +85,55 @@ body{
 .brand{display:flex;align-items:center;gap:12px}
 .logo{flex:none;inline-size:clamp(42px,9vw,54px);block-size:clamp(42px,9vw,54px);
   border-radius:16px;display:grid;place-items:center;font-size:clamp(20px,4.4vw,26px);
-  background:linear-gradient(145deg,#8F82D9,#5275D9);color:#fff;
-  box-shadow:0 10px 22px rgba(143,130,217,.5), inset 0 2px 5px rgba(255,255,255,.45)}
+  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.42);color:#fff;
+  box-shadow:inset 0 2px 6px rgba(255,255,255,.3)}
 .brand h1{font-size:clamp(16px,3.6vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.2px}
-.brand p{font-size:clamp(11px,2.2vw,13px);color:var(--muted);margin-top:2px}
+.brand p{font-size:clamp(11px,2.2vw,13px);color:rgba(255,255,255,.85);margin-top:2px}
 
 .meta-row{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.95);
+.chip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.42);
   border-radius:999px;padding:7px 13px;font-size:clamp(10.5px,2.1vw,12.5px);
-  font-weight:700;color:var(--blue);white-space:nowrap;
-  box-shadow:0 4px 12px rgba(82,117,217,.13)}
-.chip.date{color:var(--ink)}
-.chip.date.soft{color:var(--muted);font-weight:600}
-.chip.loading{color:var(--muted);position:relative;overflow:hidden}
+  font-weight:700;color:#fff;white-space:nowrap;backdrop-filter:blur(8px)}
+.chip.date{color:#fff}
+.chip.date.soft{color:rgba(255,255,255,.85);font-weight:600}
+.chip.loading{color:rgba(255,255,255,.8);position:relative;overflow:hidden}
 .chip.loading::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
   animation:shimmer 1.3s infinite}
 @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-.chip.err{color:#C2607B;border-color:rgba(194,96,123,.35)}
+.chip.err{color:#FFD9E2;border-color:rgba(255,217,226,.4)}
 
 /* next prayer badge */
 .next-badge{display:inline-flex;align-items:center;gap:11px;align-self:flex-start;
   max-inline-size:100%;padding:10px 14px;border-radius:18px;color:#fff;
-  background:linear-gradient(135deg,#5275D9,#8F82D9);
-  box-shadow:0 12px 26px rgba(103,110,215,.42), inset 0 1px 0 rgba(255,255,255,.3)}
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);
+  backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
 .np-ic{flex:none;inline-size:34px;block-size:34px;border-radius:12px;display:grid;
-  place-items:center;font-size:16px;background:rgba(255,255,255,.24);
-  border:1px solid rgba(255,255,255,.45)}
+  place-items:center;font-size:16px;background:rgba(255,255,255,.28);
+  border:1px solid rgba(255,255,255,.5)}
 .np-txt{min-inline-size:0;line-height:1.25}
 .np-txt small{display:block;font-size:9.5px;font-weight:700;letter-spacing:.7px;
   text-transform:uppercase;opacity:.85}
 .np-txt b{display:block;font-size:clamp(12.5px,2.6vw,15px);font-weight:800}
-.np-count{flex:none;font-size:clamp(10px,2vw,11.5px);font-weight:800;
-  background:rgba(255,255,255,.24);border:1px solid rgba(255,255,255,.4);
+.np-count{flex:none;font-size:clamp(10px,2vw,11.5px);font-weight:800;color:var(--blue);
+  background:#fff;border:1px solid rgba(255,255,255,.9);
   padding:5px 11px;border-radius:999px;white-space:nowrap}
 
 /* --- right --- */
 .head-right{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.icon-box{inline-size:clamp(44px,9vw,56px);block-size:clamp(44px,9vw,56px);
-  border-radius:16px;border:1px solid rgba(255,255,255,.95);cursor:pointer;
-  background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
-  font-size:clamp(19px,4vw,23px);display:grid;place-items:center;transition:.25s;
-  box-shadow:0 8px 20px rgba(82,117,217,.16), inset 0 1px 0 rgba(255,255,255,.9)}
-.icon-box:hover{background:#fff;transform:translateY(-2px)}
-.contact-btn{border:0;cursor:pointer;font-weight:800;color:#fff;
-  font-size:clamp(11.5px,2.3vw,13.5px);padding:10px clamp(18px,3.4vw,26px);
-  border-radius:999px;background:linear-gradient(135deg,#8F82D9,#5275D9);
-  box-shadow:0 10px 22px rgba(122,105,205,.42);transition:.25s;white-space:nowrap}
-.contact-btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(122,105,205,.5)}
+.info-pills{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.contact-btn{border:0;cursor:pointer;font-weight:800;color:var(--blue);
+  font-size:clamp(11.5px,2.3vw,13.5px);padding:11px clamp(20px,3.6vw,30px);
+  border-radius:999px;background:#fff;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);transition:.25s;white-space:nowrap}
+.contact-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.24)}
 
-@media(max-width:400px){
-  .head-main{flex-direction:row}
-  .head-right{flex-direction:row;align-items:center}
-  .contact-btn{padding:10px 16px}
+@media(max-width:560px){
+  .head-main{flex-direction:column}
+  .head-right{inline-size:100%;flex-direction:row;flex-wrap:wrap;
+    align-items:center;justify-content:space-between}
+  .info-pills{flex-direction:row;flex-wrap:wrap;align-items:center}
 }
 
 /* ---------- Section heads ---------- */
@@ -342,8 +338,6 @@ body{
         </div>
 
         <div class="meta-row">
-          <span class="chip loading" id="weatherChip">🌤 --°C</span>
-          <span class="chip loading" id="locChip">📍 Locating…</span>
           <span class="chip date" id="hijri">20 Rabi' al-Awwal 1447</span>
           <span class="chip date soft" id="greg">Thursday, 3 September 2026</span>
         </div>
@@ -360,7 +354,10 @@ body{
 
       <!-- RIGHT -->
       <div class="head-right">
-        <button class="icon-box" aria-label="Notifications">🔔</button>
+        <div class="info-pills">
+          <span class="chip loading" id="weatherChip">🌤 --°C</span>
+          <span class="chip loading" id="locChip">📍 Locating…</span>
+        </div>
         <button class="contact-btn">Contact</button>
       </div>
     </div>
