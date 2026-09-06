@@ -1,11 +1,8 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/documents/:path*", "destination": "/public/documents/:path*" }
-  ],
   "headers": [
     {
-      "source": "/(public/)?documents/(.*).pdf",
+      "source": "/documents/(.*).pdf",
       "headers": [
         { "key": "Content-Type", "value": "application/pdf" },
         { "key": "Content-Disposition", "value": "inline" },
@@ -14,7 +11,7 @@
       ]
     },
     {
-      "source": "/(public/)?documents/manifest.json",
+      "source": "/documents/manifest.json",
       "headers": [
         { "key": "Content-Type", "value": "application/json; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" },

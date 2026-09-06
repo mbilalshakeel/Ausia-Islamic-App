@@ -42,7 +42,7 @@ public/documents/
 └── books/          # Islamic books, hadith
 ```
 
-Served at `/documents/<category>/<file>.pdf` (rewrite in `vercel.json`).
+Served at `/documents/<category>/<file>.pdf`. `public/` is the Vercel output directory, so `index.html` lives there too.
 
 **To add a document:** drop the file in the right subfolder → add an entry to
 `manifest.json` → push. Reading tiles and the Books slider pick it up automatically.
