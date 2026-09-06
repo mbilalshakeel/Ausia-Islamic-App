@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "basePath": "/documents",
+  "categories": {
+    "quran": {
+      "label": "Al-Quran",
+      "icon": "📖",
+      "items": [
+        {
+          "id": "quran-full",
+          "title": "Al-Quran al-Kareem",
+          "subtitle": "Complete Mushaf · 604 pages",
+          "file": "quran/quran-kareem.pdf",
+          "type": "pdf",
+          "lang": "ar"
+        }
+      ]
+    },
+    "qaida": {
+      "label": "Qaida",
+      "icon": "🔤",
+      "items": [
+        {
+          "id": "noorani-qaida",
+          "title": "Noorani Qaida",
+          "subtitle": "Beginner Arabic reading",
+          "file": "qaida/noorani-qaida.pdf",
+          "type": "pdf",
+          "lang": "ar"
+        }
+      ]
+    },
+    "books": {
+      "label": "Islamic Books",
+      "icon": "📚",
+      "items": [
+        {
+          "id": "riyad-us-saliheen",
+          "title": "Riyad us-Saliheen",
+          "subtitle": "1896 Hadith",
+          "file": "books/riyad-us-saliheen.pdf",
+          "type": "pdf",
+          "lang": "en"
+        },
+        {
+          "id": "sahih-bukhari",
+          "title": "Sahih Bukhari",
+          "subtitle": "7563 Hadith",
+          "file": "books/sahih-bukhari.pdf",
+          "type": "pdf",
+          "lang": "en"
+        }
+      ]
+    }
+  }
+}

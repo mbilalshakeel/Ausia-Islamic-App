@@ -755,5 +755,83 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') dimToggle(false); 
 dimLoad(); dimApply(); dimBuild();
 </script>
 
+
+<script>
+/* ---------- Documents layer: serve & fetch from /documents ---------- */
+const DOCS_BASE='/documents';
+let DOCS=null;
+
+/** Build a public URL for a document path, e.g. docUrl('books/x.pdf') */
+function docUrl(file){ return `${DOCS_BASE}/${String(file).replace(/^\/+/,'')}`; }
+
+/** Load and cache the manifest */
+async function loadDocs(){
+  if(DOCS) return DOCS;
+  try{
+    const r=await fetch(`${DOCS_BASE}/manifest.json`,{cache:'no-cache'});
+    if(!r.ok) throw new Error(r.status);
+    DOCS=await r.json();
+  }catch(e){
+    console.warn('[docs] manifest unavailable:',e.message);
+    DOCS={categories:{}};
+  }
+  return DOCS;
+}
+
+/** Get items for a category key: quran | qaida | books */
+async function getDocs(cat){
+  const m=await loadDocs();
+  return (m.categories?.[cat]?.items)||[];
+}
+
+/** Check a file actually exists before linking (HEAD request) */
+async function docExists(file){
+  try{ const r=await fetch(docUrl(file),{method:'HEAD'}); return r.ok; }
+  catch(e){ return false; }
+}
+
+/** Open a document in a new tab (inline PDF viewer) */
+async function openDoc(file){
+  const url=docUrl(file);
+  if(await docExists(file)) window.open(url,'_blank','noopener');
+  else alert('Document not uploaded yet:\n'+url);
+}
+
+/* ---- Wire up existing UI ---- */
+async function wireDocs(){
+  const m=await loadDocs();
+
+  /* Reading tiles -> matching category */
+  const tileMap={'Al-Quran':'quran','Qaida':'qaida','Hadiths':'books'};
+  document.querySelectorAll('.tile').forEach(t=>{
+    const name=t.querySelector('b')?.textContent.trim();
+    const cat=tileMap[name];
+    if(!cat) return;
+    const items=m.categories?.[cat]?.items||[];
+    if(!items.length) return;
+    t.style.cursor='pointer';
+    t.dataset.doc=items[0].file;
+    t.addEventListener('click',()=>openDoc(items[0].file));
+  });
+
+  /* Books slider -> render from manifest when entries exist */
+  const books=m.categories?.books?.items||[];
+  const wrap=document.querySelector('.books');
+  if(wrap && books.length){
+    const grads=['k1','k2','k3','k4','k5','k6'];
+    wrap.innerHTML=books.map((b,i)=>
+      `<div class="book ${grads[i%grads.length]}" data-doc="${b.file}" role="button" tabindex="0">
+         <b>${b.title}</b><small>${b.subtitle||''}</small>
+       </div>`).join('');
+    wrap.querySelectorAll('.book').forEach(el=>{
+      const f=el.dataset.doc;
+      el.addEventListener('click',()=>openDoc(f));
+      el.addEventListener('keydown',e=>{ if(e.key==='Enter') openDoc(f); });
+    });
+  }
+}
+wireDocs();
+</script>
+
 </body>
 </html>

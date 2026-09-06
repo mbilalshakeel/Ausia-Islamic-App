@@ -30,6 +30,26 @@ Glassmorphism · gradient background with floating blobs · frosted rounded card
 ## Responsive Breakpoints
 `≤360px` · `480px+` · `768px+` (tablet) · `980px+` (laptop) · `1400px+` · `1800px+` (4K) · landscape phones · `prefers-reduced-motion`
 
+## Documents
+
+PDFs and documents live in `public/documents/`:
+
+```
+public/documents/
+├── manifest.json   # registry the app reads
+├── quran/          # Quran PDFs
+├── qaida/          # Noorani Qaida, lessons
+└── books/          # Islamic books, hadith
+```
+
+Served at `/documents/<category>/<file>.pdf` (rewrite in `vercel.json`).
+
+**To add a document:** drop the file in the right subfolder → add an entry to
+`manifest.json` → push. Reading tiles and the Books slider pick it up automatically.
+
+Helpers available in the app: `docUrl(file)`, `loadDocs()`, `getDocs(cat)`,
+`docExists(file)`, `openDoc(file)`.
+
 ## Tech
 Single-file static app — pure HTML + CSS + vanilla JS. No build step.
 
